@@ -40,5 +40,5 @@ Mont Blanc/Monte Bianco:
 ![NO-ALT](https://www.grulic.org.ar/~mdione/glob/images/Mont_Blanc-Monte_Bianco.jpg)
 
 Man, I love the fact that the tail of the Giacchiaio del Miage is in shadows, but the rest is not; or how
-Monte Bianco/Mont Blanc's shadow reaches across the valley to the base of la Tête d'Arp. But also notice the bad data
+Monte Bianco/Mont Blanc's shadow reaches across the Val Vény to the base of la Tête d'Arp. But also notice the bad data
 close to la Mer de Glace.
