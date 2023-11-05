@@ -1,5 +1,9 @@
 # blender_hilllshading
+
 Generate hillshading from DEM files using Blender.
+
+It's a scripted and slightly enhanced version of Daniel Huffman's famous
+[Blender Relief Tutorial](https://somethingaboutmaps.wordpress.com/blender-relief-tutorial-getting-set-up/)
 
 Try to use the `main` branch; `develop` is considered unstable and can be broken.
 
