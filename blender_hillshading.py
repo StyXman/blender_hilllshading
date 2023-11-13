@@ -40,8 +40,9 @@ def plane(x, y, lat, lon, opts):
     central_plane.scale = (width / 1000, height / 1000, 1.0)
 
     # thanks intrac_#blender@libera.chat and Andrej/Andrej730#python@blender.chat
-    bpy.data.materials.new('Surface')
-    central_material = bpy.data.materials['Surface']
+    surface_name = f"Surface_{filename}"
+    bpy.data.materials.new(surface_name)
+    central_material = bpy.data.materials[surface_name]
     central_plane.active_material = central_material
 
     # ugh
