@@ -29,7 +29,7 @@ def parse_args():
 
     parser.add_argument('--render-samples', '-s', type=int, default=200)
     parser.add_argument('--render-scale',         type=int, default=100)
-    parser.add_argument('--height-scale',   '-x', type=float)
+    parser.add_argument('--height-scale',   '-x', type=float, required=True)
     parser.add_argument('--render-tile-size',     type=int, default=512)
 
     # these two are needed to avoid this error:
