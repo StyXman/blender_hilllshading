@@ -36,23 +36,23 @@ def plane(x, y, lat, lon, opts):
 
     # The Plane
     bpy.ops.mesh.primitive_plane_add(size=2, enter_editmode=False, align='WORLD', location=(0, 0, 0))
-    central_plane = bpy.data.objects['Plane']
-    central_plane.scale = (width / 1000, height / 1000, 1.0)
+    plane = bpy.data.objects['Plane']
+    plane.scale = (width / 1000, height / 1000, 1.0)
 
     # thanks intrac_#blender@libera.chat and Andrej/Andrej730#python@blender.chat
     surface_name = f"Surface_{filename}"
     bpy.data.materials.new(surface_name)
-    central_material = bpy.data.materials[surface_name]
-    central_plane.active_material = central_material
+    material = bpy.data.materials[surface_name]
+    plane.active_material = material
 
     # ugh
-    central_material.use_nodes = True
+    material.use_nodes = True
 
     # some shortcuts
-    central_output = central_material.node_tree.nodes["Material Output"]
+    output = material.node_tree.nodes["Material Output"]
 
     # Shader Editor
-    central_texture = central_material.node_tree.nodes.new('ShaderNodeTexImage')
+    texture = material.node_tree.nodes.new('ShaderNodeTexImage')
     bpy.ops.image.open(filepath=filename,
                        directory=opts.path,
                        files=[{ "name": filename, "name": filename }],
@@ -61,29 +61,29 @@ def plane(x, y, lat, lon, opts):
     image = bpy.data.images[filename]
     # image.colorspace_settings.name = 'Linear'
     image.colorspace_settings.name = 'XYZ'
-    central_texture.image = image
+    texture.image = image
 
-    central_displacement = central_material.node_tree.nodes.new('ShaderNodeDisplacement')
-    central_displacement.inputs[2].default_value = opts.height_scale
+    displacement = material.node_tree.nodes.new('ShaderNodeDisplacement')
+    displacement.inputs[2].default_value = opts.height_scale
 
     # connect them
-    src_1 = central_texture.outputs[0]
-    dst_1 = central_displacement.inputs[0]
-    central_material.node_tree.links.new(src_1, dst_1)
+    src_1 = texture.outputs[0]
+    dst_1 = displacement.inputs[0]
+    material.node_tree.links.new(src_1, dst_1)
 
-    src_2 = central_displacement.outputs[0]
-    dst_2 = central_output.inputs[2]
-    central_material.node_tree.links.new(src_2, dst_2)
+    src_2 = displacement.outputs[0]
+    dst_2 = output.inputs[2]
+    material.node_tree.links.new(src_2, dst_2)
 
-    central_texture.interpolation = 'Smart'
-    central_texture.extension = 'EXTEND'
+    texture.interpolation = 'Smart'
+    texture.extension = 'EXTEND'
     bpy.ops.object.modifier_add(type='SUBSURF')
     bpy.context.object.modifiers["Subdivision"].subdivision_type = 'SIMPLE'
     bpy.context.object.cycles.use_adaptive_subdivision = True
-    central_material.cycles.displacement_method = 'DISPLACEMENT'
+    material.cycles.displacement_method = 'DISPLACEMENT'
 
     # Fun with Materials
-    shader = central_material.node_tree.nodes["Principled BSDF"]
+    shader = material.node_tree.nodes["Principled BSDF"]
     shader.inputs[0].default_value = (0.402, 0.402, 0.402, 1)  # color
     shader.inputs[7].default_value = 0  # specular
     shader.inputs[9].default_value = 1  # Roughness
