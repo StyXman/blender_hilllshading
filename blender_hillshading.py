@@ -62,15 +62,15 @@ def plane(x, y, lat, lon, opts):
     texture.image = image
 
     displacement = material.node_tree.nodes.new('ShaderNodeDisplacement')
-    displacement.inputs[2].default_value = opts.height_scale
+    displacement.inputs[2].default_value = opts.height_scale  # Scale
 
     # connect them
-    src_1 = texture.outputs[0]
-    dst_1 = displacement.inputs[0]
+    src_1 = texture.outputs[0]      # Color
+    dst_1 = displacement.inputs[0]  # Height
     material.node_tree.links.new(src_1, dst_1)
 
-    src_2 = displacement.outputs[0]
-    dst_2 = output.inputs[2]
+    src_2 = displacement.outputs[0]  # Displacement
+    dst_2 = output.inputs[2]         # Displacement
     material.node_tree.links.new(src_2, dst_2)
 
     texture.interpolation = 'Smart'
@@ -82,9 +82,9 @@ def plane(x, y, lat, lon, opts):
 
     # Fun with Materials
     shader = material.node_tree.nodes["Principled BSDF"]
-    shader.inputs[0].default_value = (0.402, 0.402, 0.402, 1)  # color
-    shader.inputs[7].default_value = 0  # specular
-    shader.inputs[9].default_value = 1  # Roughness
+    shader.inputs[0].default_value = (0.402, 0.402, 0.402, 1)  # Base Color
+    shader.inputs[7].default_value = 0                         # Specular
+    shader.inputs[9].default_value = 1                         # Roughness
 
     return height, width, crs, transform
 
