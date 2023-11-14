@@ -28,9 +28,10 @@ def plane(x, y, lat, lon, opts):
     # print(locals())
 
     filename = opts.filename.format(**locals())
+    filepath = opts.pattern.format(**locals())
 
     # I wish I could use f-strings for pattern
-    width, height, crs, transform = get_metadata(opts.pattern.format(**locals()))
+    width, height, crs, transform = get_metadata(filepath)
 
     print((width, height, crs, transform))
 
@@ -53,10 +54,7 @@ def plane(x, y, lat, lon, opts):
 
     # Shader Editor
     texture = material.node_tree.nodes.new('ShaderNodeTexImage')
-    bpy.ops.image.open(filepath=filename,
-                       directory=opts.path,
-                       files=[{ "name": filename, "name": filename }],
-                       relative_path=True, show_multiview=False)
+    bpy.ops.image.open(filepath=filepath)
 
     image = bpy.data.images[filename]
     # image.colorspace_settings.name = 'Linear'
